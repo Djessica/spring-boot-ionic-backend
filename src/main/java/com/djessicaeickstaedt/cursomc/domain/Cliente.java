@@ -16,8 +16,9 @@ import javax.persistence.OneToMany;
 
 import com.djessicaeickstaedt.cursomc.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
-public class Cliente  implements Serializable {
+public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -28,15 +29,19 @@ public class Cliente  implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 
-	//essa anottation diz que o cliente pode serializar os endereços dele
+	// essa anottation diz que o cliente pode serializar os endereços dele
 	@JsonManagedReference
-	//diz que a ligação é de um para muitos, e que foi mapeado na classe endereço pela variavel cliente
+	// diz que a ligação é de um para muitos, e que foi mapeado na classe endereço
+	// pela variavel cliente
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
+
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente() {
 
@@ -105,6 +110,14 @@ public class Cliente  implements Serializable {
 
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override
