@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class ItemPedido  implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -11,6 +13,7 @@ public class ItemPedido  implements Serializable {
 	//é usada essa notação porque o id é uma chave composta que usar uma classe auxiliar
 	//ou seja é um id embutido em uma classe auxiliar
 	@EmbeddedId
+	@JsonIgnore
 	private ItemPedidoPK id = new ItemPedidoPK();
 	private Double desconto;
 	private Integer quantidade;
@@ -63,10 +66,11 @@ public class ItemPedido  implements Serializable {
 	
 	//getPedido e getProduto foram criado para que se possa acessar o produto e pedido sem ter que passar
 	//pela classe itempedidopk
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
-	
+	@JsonIgnore
 	public Produto getProduto() {
 		return id.getProduto();
 	}
