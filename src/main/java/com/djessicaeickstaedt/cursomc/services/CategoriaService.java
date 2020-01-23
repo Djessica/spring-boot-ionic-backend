@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.djessicaeickstaedt.cursomc.domain.Categoria;
+import com.djessicaeickstaedt.cursomc.dto.CategoriaDTO;
 import com.djessicaeickstaedt.cursomc.repositories.CategoriaRepository;
 import com.djessicaeickstaedt.cursomc.services.exceptions.DataIntegrityException;
 import com.djessicaeickstaedt.cursomc.services.exceptions.ObjectNotFoundException;
@@ -52,10 +53,13 @@ public class CategoriaService {
 	}
 
 	/* a classe page é pertencente ao Spring */
-	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		/* o pagerequest é usado para que o spring saiba como vai ser a paginação */
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
-				orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+
+	public Categoria fromDTO(CategoriaDTO objDTO) {
+		return new Categoria(objDTO.getId(), objDTO.getNome());
 	}
 }
