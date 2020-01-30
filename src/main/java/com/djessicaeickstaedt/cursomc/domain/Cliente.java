@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -33,7 +34,11 @@ public class Cliente implements Serializable {
 	//@JsonManagedReference
 	// diz que a ligação é de um para muitos, e que foi mapeado na classe endereço
 	// pela variavel cliente
-	@OneToMany(mappedBy = "cliente")
+	/*
+	 * a instrução cascade diz que se o cliente for excluido os endereços também vão
+	 * ser, ele vai fazer uma deleção em cascata
+	 */
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection
